@@ -1,44 +1,69 @@
-# phpvms-simbrief-options-form
+# phpVMS Simbrief Options Form
 A form to allow options to be altered before generating the SimBrief OFP.
 
-NOTE: This addon is designed to work with the SimBrief Addon by Vangelis on PHPVMS Forums. You must have this installed for this functionality to work. http://forum.phpvms.net/topic/21388-sim-brief-for-phpvms/
-I am also using David Clark's version of PHPVMS where the templates are in .php format rather than .tpl. If you have an older version and your template files are .tpl, simply alter the file extension as required and the file should work.
+--------------------
+NOTE: This addon is designed to work with the SimBrief Addon by Vangelis on PHPVMS Forums. 
+You must have this installed for this functionality to work. http://forum.phpvms.net/topic/21388-sim-brief-for-phpvms/
+I am also using David Clark's version of PHPVMS where the templates are in .php format rather than .tpl 
+If you have the older .tpl version of PHPVMS, please look in the "tpl" branch as it has the files for that version of PHPVMS.
 You must also have a SimBrief API key which is expained in Vangelis' module.
 You must also register for a free SimBrief account for the form to work as it needs to make a connection to SimBrief itself.
 
+----------------------
 INSTALLATION
-Download the "schedules_briefing.php" file.
-It is optional if you want to download the "style.css" file. It gives you the custom styles I have used for my form and page. You may want to use your own sites styling for the form and tables.
-If you are using a custom skin for phpvms then you will need to place the "schedules_briefing.php" file in /lib/skins/(your skin name).
-If you are not using a custom skin, then you should place the file in /core/templates/.
-If you wish to use my styling, you can just copy and paste the styles from my "style.css" to your style file. For a custom skin this is likely to be /lib/skins/(your skin name)/css/style.css.
-For a vanilla phpvms install, your style file should be located in /lib/css/phpvms.css.
-If you want to use your own styling, then you need to change the following html tag references in the "schedules_briefing.php" file you downloaded.
+----------------------
+1. Download the files required (See below) and place them in the relevant folders on your servers.
 
-Change "classic-title5" to one of your own header styles
+	***Required**
+    The lib/skins/YOURSKINNAME/schedule_briefing.php is the main template for this addon.
+    	Please place this file in lib/skins/YOURSKINNAME to overwrite the default template.
+        If you don't have a custom skin and are using the default "crystal" skin, then please place it in core/templates instead.
+    
+    The core/common/OperationsData.class.php file is important because it gives you the option to dynamically load the aircraft into the template. If you have modified this file in the past, please only copy the following function into your OperationsData.class.php
+    public static function getAllAircraftSingle($onlyenabled = false) {
+    
+    **Optional**
+    
+	It is optional if you want to download the "style.css" file. It gives you the custom styles I have used for my form and page. 
+	You may want to use your own sites styling for the form and tables.
+    
+    The lib/images/logos contains the relevant image files for the template.
 
-The "call-action" is a Boostrap3 box. The styling of the box is controlled by "call-action-style1.
-div class="call-action call-action-boxed call-action-style1 no-descripton clearfix"
+	If you want to use my own styling, make sure that the simbrief_briefing_style.css is placed in lib/css
+		(Or move it into your skin folder and adjust the link)
+	If you don't want to use my styling, you do not need the simbrief_briefing_style.css file, but if you upload it anyway,
+	take out this line from the schedule_briefing.php
+	<link rel="stylesheet" href="<?php echo SITE_URL;?>/lib/css/simbrief_briefing_style.css" type="text/css" />
+	On line 2.
 
-This controls the general styling of the container and it's elements that house the tables.
-div class="schedule-briefing"
+2. Change The Styling
+	Change "classic-title5" to one of your own header styles
 
-This controls the specific table style. You can simply overwrite "briefing-table" with your own style classname.
-table class="briefing-table"
+	The "call-action" is a Boostrap3 box. The styling of the box is controlled by "call-action-style1.
+	div class="call-action call-action-boxed call-action-style1 no-descripton clearfix"
 
-The "dispinput" styles the input and select form elements on the page.
-select class="dispinput" name="date" id="date"
+	This controls the general styling of the container and it's elements that house the tables.
+	div class="schedule-briefing"
 
-Once you've uploaded the schedule_briefing.php file, you need to also edit the following line at the bottom of the file.
+	This controls the specific table style. You can simply overwrite "briefing-table" with your own style classname.
+	table class="briefing-table"
 
-Replace the url from my form.
-button type="button" style="width:100%" class="btn btn-success btn-lg" onclick="simbriefsubmit('http://www.globalairalliance.com/index.php/SimBrief');" style="font-size:30px" value="Generate">Click to Generate OFP
+	The "dispinput" styles the input and select form elements on the page.
+	select class="dispinput" name="date" id="date"
 
-with yours as shown below.
-button type="button" style="width:100%" class="btn btn-success btn-lg" onclick="simbriefsubmit('http://Your website URL here/index.php/SimBrief');" style="font-size:30px" value="Generate">Click to Generate OFP
+3. Once you've uploaded the schedule_briefing.php file, you need to also edit the following line at the bottom of the file.
 
 That's it, you should be good to go.
 
-To test it, bid on a flight, go to "view my bids" and click on "pilot brief". You should now see your form. Adjust the settings as you need and press on the "Click to Generate OFP". You should now see your OFP complete with accurate timings and fuel predictions.
+----------------------
+Testing It Out
+----------------------
+1. Bid on a flight
+2. Go to "View My Bids"
+3. Click on "Pilot Brief"
+4. You Should now see your form
+5. Adjust the settings you need
+6. Press on the "Click to Generate OFP"
+7. You should now see your complete OFP with accurate timings and fuel predictions
 
 Enjoy!
