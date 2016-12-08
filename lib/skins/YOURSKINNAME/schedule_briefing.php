@@ -8,7 +8,7 @@
         <div class="schedule-briefing">
             <table class="briefing-table">
             	<tr>
-                	<th>Airline</th>
+                    <th>Airline</th>
                     <th>Flight No.</th>
                     <th>Dep ICAO</th>
                     <th>Arr ICAO</th>
@@ -23,22 +23,25 @@
                     <td><?php echo "{$schedule->arrname} ($schedule->arricao)"; ?></td>
                     <td><?php echo "{$schedule->distance}"; ?></td>
                     <td>
-                    <script>
-					  $(function() {
-						$( "#datepicker" ).datepicker({dateFormat: "ddMy"
-						});
-					  });
-					</script>
+                    <script type="text/javascript">
+	            $(function() {
+			$( "#datepicker" ).datepicker({dateFormat: "ddMy"
+			});
+		    });
+		    </script>
                     <input class="dispinput" name="date" size="7" type="text" id="datepicker">
                     </td>
                     <td>
-					<?php
+		     <?php
                      $r = range(1, 24);
                     
                      $selected = is_null($selected) ? date('h') : $selected;
                      $select = "<select name=deph id=dephour>\n";
-                     foreach ($r as $hour)
-                     {
+		     foreach ($r as $hour)
+		     {
+		          if(strlen($hour) < 2) {
+			     $hour = str_pad($hour, 2, "0", STR_PAD_LEFT); 
+		          }
                              $select .= "<option value=\"$hour\"";
                              $select .= ($hour==$selected) ? ' selected="selected"' : '';
                              $select .= ">$hour</option>\n";
